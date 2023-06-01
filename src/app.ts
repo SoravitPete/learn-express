@@ -54,17 +54,31 @@ app.get('/playlist/:playlistID', (req: Request, res: Response)  => {
 app.post('/create', (req: Request, res: Response)  => {
   console.log(req.body);
   const data = req.body;
-  let i = 0;
-  while (i < playlist.length) {
-      console.log(i);
-      i++;
-  }
-  data.id = i;
+  // try{
+  //   const obj = JSON.parse(data);
+  // }
+  // catch(error){
+  //   res.status(404).json({massage : "Some thing wrong about Json format"});
+  //   return;
+  // }
+  var dummy = playlist.length;
+  // let i = 0;
+  // while (i < playlist.length) {
+  //     console.log(i);
+  //     i++;
+  // }
+  data.id = dummy;
   playlist.push(data);
   res.send(data)
 })
 
 app.put('/update/:playlistID', (req: Request, res: Response)  => {
+  if (typeof parseInt(req.params.playlistID) !== "number"){
+    res.status(404).json({massage : "Not found"});
+  }
+  else if (isNaN(0 - parseInt(req.params.playlistID))){
+    res.status(404).json({massage : "Pls enter Number"});
+  }
   let dummy = parseInt(req.params.playlistID);
   const new_data = req.body;
   var ans = playlist.find(item => item.id == dummy);
