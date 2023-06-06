@@ -76,6 +76,22 @@ communityRoute.post('/api/create', (req: Request, res: Response) => {
         res.status(404).json({massage : "status wrong format or invalid DATA"});
         return
     }
+    var test_link = data.companyLink.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
+    if (test_link !== null){
+        console.log("Link state Pass")
+    }
+    else{
+        res.status(404).json({massage : "Invalid Link"});
+        return
+    }
+    var valid_date = Date.parse(data.date) 
+    if(isNaN(valid_date) === false){
+        console.log("Date state is Pass")
+    }
+    else{
+        res.status(404).json({massage : "Date is wrong format or not valid"});
+        return
+    }
     data.festival_id =  whole_id;
     whole_id += 1
     console.log(data)
